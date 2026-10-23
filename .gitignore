@@ -1,0 +1,22 @@
+# Banco local e backups
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Configurações locais e sistema operacional
+.env
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
