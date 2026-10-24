@@ -18,6 +18,15 @@ class EstoqueFacilApp(tk.Tk):
         self._build_interface()
         self.atualizar_estoque()
 
+    @staticmethod
+    def _mostrar_erro_inesperado(parent=None):
+        print("Erro inesperado ao acessar o banco de dados ou a interface.")
+        messagebox.showerror(
+            "Erro inesperado",
+            "Não foi possível concluir a operação. Verifique os dados e tente novamente.",
+            parent=parent,
+        )
+
     def _configure_style(self):
         style = ttk.Style(self)
         if "vista" in style.theme_names():
@@ -78,13 +87,16 @@ class EstoqueFacilApp(tk.Tk):
         scrollbar.pack(side="right", fill="y")
 
     def atualizar_estoque(self):
-        for item in self.stock_tree.get_children():
-            self.stock_tree.delete(item)
-        for produto in self.service.listar_produtos(self.search_var.get()):
-            self.stock_tree.insert(
-                "", "end", iid=str(produto["id"]),
-                values=(produto["nome"], produto["categoria"], produto["quantidade_atual"], produto["situacao"]),
-            )
+        try:
+            for item in self.stock_tree.get_children():
+                self.stock_tree.delete(item)
+            for produto in self.service.listar_produtos(self.search_var.get()):
+                self.stock_tree.insert(
+                    "", "end", iid=str(produto["id"]),
+                    values=(produto["nome"], produto["categoria"], produto["quantidade_atual"], produto["situacao"]),
+                )
+        except Exception:
+            self._mostrar_erro_inesperado(self)
 
     def abrir_cadastro(self):
         window = tk.Toplevel(self)
@@ -111,11 +123,17 @@ class EstoqueFacilApp(tk.Tk):
                 self.atualizar_estoque()
             except EstoqueError as error:
                 messagebox.showerror("Não foi possível cadastrar", str(error), parent=window)
+            except Exception:
+                self._mostrar_erro_inesperado(window)
 
         ttk.Button(frame, text="Salvar", command=salvar).grid(row=3, column=1, sticky="e", pady=(14, 0))
 
     def abrir_movimentacao(self):
-        produtos = self.service.listar_produtos()
+        try:
+            produtos = self.service.listar_produtos()
+        except Exception:
+            self._mostrar_erro_inesperado(self)
+            return
         if not produtos:
             messagebox.showinfo("Movimentar estoque", "Cadastre um produto antes de movimentar o estoque.")
             return
@@ -144,6 +162,8 @@ class EstoqueFacilApp(tk.Tk):
                 self.atualizar_estoque()
             except (EstoqueError, ValueError) as error:
                 messagebox.showerror("Não foi possível movimentar", str(error), parent=window)
+            except Exception:
+                self._mostrar_erro_inesperado(window)
 
         ttk.Button(frame, text="Salvar", command=salvar).grid(row=3, column=1, sticky="e", pady=(14, 0))
 
@@ -159,8 +179,11 @@ class EstoqueFacilApp(tk.Tk):
         for col in columns:
             tree.heading(col, text=labels[col])
             tree.column(col, width=145 if col != "observacao" else 120)
-        for movement in self.service.historico():
-            tree.insert("", "end", values=tuple(movement[col] for col in columns))
+        try:
+            for movement in self.service.historico():
+                tree.insert("", "end", values=tuple(movement[col] for col in columns))
+        except Exception:
+            self._mostrar_erro_inesperado(window)
         tree.pack(fill="both", expand=True)
 
 

@@ -76,9 +76,9 @@ No ambiente de desenvolvimento, o comando abaixo foi executado com sucesso:
 python3 -m unittest -v
 ```
 
-Resultado registrado: **10 testes executados e aprovados**. A compilação dos arquivos Python também foi verificada com `py_compile`.
+Resultado registrado: **10 testes executados e aprovados**. A compilação dos arquivos Python também foi verificada com `py_compile`. A janela Tkinter também foi inicializada e encerrada com sucesso em uma tela virtual (`xvfb`), confirmando a construção básica da interface.
 
-A execução da interface gráfica no Windows e as respectivas capturas de tela ainda devem ser realizadas no computador de apresentação.
+A execução visual no Windows e as respectivas capturas de tela ainda devem ser realizadas no computador de apresentação. A validação em tela virtual não substitui essas evidências.
 
 ## 8. Limitações
 

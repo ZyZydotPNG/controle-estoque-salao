@@ -2,6 +2,16 @@
 
 As capturas abaixo devem ser feitas no computador Windows onde a aplicação for executada. Não use imagens simuladas.
 
+## Validações já realizadas no ambiente de desenvolvimento
+
+- 10 testes `unittest` executados com resultado `OK`.
+- Compilação dos arquivos Python verificada com `py_compile`.
+- Tkinter importado com sucesso.
+- Janela Tkinter inicializada e encerrada em tela virtual.
+- Repositório GitHub conferido na branch `main`, com os arquivos do projeto e três commits remotos.
+
+Essas validações não substituem as capturas reais da aplicação no Windows.
+
 ## Evidências do sistema
 
 - [ ] Tela principal do Estoque Fácil aberta.
