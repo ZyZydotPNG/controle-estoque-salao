@@ -14,6 +14,7 @@ class EstoqueFacilApp(tk.Tk):
         self.geometry("820x540")
         self.minsize(760, 480)
         self.service = EstoqueService()
+        self.fonte_ampliada = False
         self._configure_style()
         self._build_interface()
         self.atualizar_estoque()
@@ -31,6 +32,12 @@ class EstoqueFacilApp(tk.Tk):
         style = ttk.Style(self)
         if "vista" in style.theme_names():
             style.theme_use("vista")
+        style.configure("TLabel", font=("Segoe UI", 10))
+        style.configure("TButton", font=("Segoe UI", 10))
+        style.configure("TEntry", font=("Segoe UI", 10))
+        style.configure("TCombobox", font=("Segoe UI", 10))
+        style.configure("Treeview", font=("Segoe UI", 10), rowheight=24)
+        style.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
         style.configure("Title.TLabel", font=("Segoe UI", 20, "bold"))
         style.configure("Subtitle.TLabel", font=("Segoe UI", 10))
         style.configure("Action.TButton", padding=8)
@@ -57,6 +64,13 @@ class EstoqueFacilApp(tk.Tk):
             ttk.Button(buttons, text=text, command=command, style="Action.TButton").pack(
                 side="left", padx=(0, 8)
             )
+        self.acessibilidade_button = ttk.Button(
+            buttons,
+            text="Acessibilidade: fonte maior",
+            command=self.alternar_acessibilidade,
+            style="Action.TButton",
+        )
+        self.acessibilidade_button.pack(side="left", padx=(0, 8))
 
         search = ttk.Frame(self, padding=(20, 4, 20, 8))
         search.pack(fill="x")
@@ -85,6 +99,25 @@ class EstoqueFacilApp(tk.Tk):
         self.stock_tree.configure(yscrollcommand=scrollbar.set)
         self.stock_tree.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
+
+    def alternar_acessibilidade(self):
+        """Amplia textos e controles para facilitar a leitura da interface."""
+        self.fonte_ampliada = not self.fonte_ampliada
+        tamanho = 13 if self.fonte_ampliada else 10
+        titulo = 23 if self.fonte_ampliada else 20
+        style = ttk.Style(self)
+        style.configure("TLabel", font=("Segoe UI", tamanho))
+        style.configure("TButton", font=("Segoe UI", tamanho))
+        style.configure("TEntry", font=("Segoe UI", tamanho))
+        style.configure("TCombobox", font=("Segoe UI", tamanho))
+        style.configure("Treeview", font=("Segoe UI", tamanho), rowheight=32 if self.fonte_ampliada else 24)
+        style.configure("Treeview.Heading", font=("Segoe UI", tamanho, "bold"))
+        style.configure("Title.TLabel", font=("Segoe UI", titulo, "bold"))
+        style.configure("Subtitle.TLabel", font=("Segoe UI", tamanho))
+        self.geometry("1180x650" if self.fonte_ampliada else "820x540")
+        self.acessibilidade_button.configure(
+            text="Acessibilidade: fonte normal" if self.fonte_ampliada else "Acessibilidade: fonte maior"
+        )
 
     def atualizar_estoque(self):
         try:
@@ -170,7 +203,7 @@ class EstoqueFacilApp(tk.Tk):
     def abrir_historico(self):
         window = tk.Toplevel(self)
         window.title("Histórico de movimentações")
-        window.geometry("760x360")
+        window.geometry("760x360+180+180")
         frame = ttk.Frame(window, padding=12)
         frame.pack(fill="both", expand=True)
         columns = ("produto", "tipo", "quantidade", "data", "observacao")

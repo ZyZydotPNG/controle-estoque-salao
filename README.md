@@ -18,6 +18,7 @@ A proposta se relaciona ao ODS 8, especialmente à meta 8.3, por apoiar a organi
 - Bloqueio de saída maior que o estoque disponível.
 - Histórico de movimentações.
 - Persistência local em SQLite.
+- Recurso de acessibilidade para ampliar a fonte e os controles da interface.
 
 ## Tecnologias
 

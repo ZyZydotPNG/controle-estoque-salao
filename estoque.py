@@ -131,8 +131,8 @@ class EstoqueService:
     def historico(self):
         with self.database.connect() as connection:
             return connection.execute(
-                """SELECT m.id, p.nome, m.tipo, m.quantidade,
-                          m.data_hora, COALESCE(m.observacao, '') AS observacao
+                """SELECT m.id, p.nome AS produto, m.tipo, m.quantidade,
+                          m.data_hora AS data, COALESCE(m.observacao, '') AS observacao
                    FROM movimentacoes m
                    JOIN produtos p ON p.id = m.produto_id
                    ORDER BY m.id DESC"""
