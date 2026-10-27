@@ -18,6 +18,7 @@ A proposta se relaciona ao ODS 8, especialmente à meta 8.3, por apoiar a organi
 - Bloqueio de saída maior que o estoque disponível.
 - Histórico de movimentações.
 - Persistência local em SQLite.
+- Recurso de acessibilidade para ampliar a fonte e os controles da interface.
 
 ## Tecnologias
 
@@ -50,6 +51,18 @@ python main.py
 ```
 
 Ao iniciar, o banco `estoque_facil.db` será criado automaticamente na pasta do projeto. Cadastre, por exemplo, `Perfume Flor de Cerejeira` ou `Body Splash Lavanda`, sempre com a categoria `Perfumes`.
+
+## Passo a passo de utilização
+
+1. Na tela inicial, clique em **Cadastrar produto**.
+2. Informe o nome do perfume ou body splash, mantenha a categoria `Perfumes` e digite a quantidade inicial. Em seguida, clique em **Salvar**.
+3. Confira o produto na tabela principal. A coluna **Situação** informa se o estoque está normal, baixo ou zerado.
+4. Para localizar um item, digite parte do nome no campo **Buscar produto** e clique em **Buscar**. Use **Atualizar consulta** para retornar à lista completa.
+5. Para registrar uma reposição ou uma venda, clique em **Movimentar estoque**, selecione o produto, escolha `ENTRADA` ou `SAIDA`, informe a quantidade e clique em **Salvar**.
+6. Depois da movimentação, confira a nova quantidade na tabela principal. O sistema não permite registrar uma saída maior que o estoque disponível.
+7. Clique em **Histórico** para consultar as movimentações, com produto, tipo, quantidade, data e observação.
+8. Para facilitar a leitura, clique em **Acessibilidade: fonte maior**. O tamanho dos textos, botões e linhas da tabela será ampliado. Clique novamente, agora em **Acessibilidade: fonte normal**, para retornar ao tamanho padrão.
+9. Para encerrar, clique em **Sair** ou feche a janela.
 
 ## Testes
 
